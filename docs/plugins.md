@@ -11,6 +11,7 @@ Available plugins:
  - [Airbrake notification on deploy](https://github.com/zendesk/samson/tree/master/plugins/airbrake_hook)
  - [Airbrake error handling](https://github.com/zendesk/samson/tree/master/plugins/airbrake)
  - [AWS ECR credential refresher](https://github.com/zendesk/samson/tree/master/plugins/aws_ecr)
+ - [Canideploy](https://github.com/zendesk/samson/tree/master/plugins/canideploy)
  - [Datadog monitoring and deploy tracking](https://github.com/zendesk/samson/tree/master/plugins/datadog)
  - [Docker binary builder](https://github.com/zendesk/samson/tree/master/plugins/docker_binary_builder)
  - [ENV var management](https://github.com/zendesk/samson/tree/master/plugins/env)

@@ -1,0 +1,1 @@
+This plugin shares the jenkins credentials as the jenkins plugin. It allows you to see a list of failing jobs that may block a deploy prior to deploying. This only shows for production, same rules as the buddy check.
