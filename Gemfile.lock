@@ -22,9 +22,9 @@ PATH
       aws-sdk-core
 
 PATH
-  remote: plugins/canideploy
+  remote: plugins/jenkins_status_checker
   specs:
-    samson_canideploy (0.0.0)
+    samson_jenkins_status_checker (0.0.0)
       jenkins_api_client (~> 1.3)
 
 PATH
@@ -597,7 +597,7 @@ DEPENDENCIES
   samson_airbrake_hook!
   samson_assertible!
   samson_aws_ecr!
-  samson_canideploy!
+  samson_jenkins_status_checker!
   samson_datadog!
   samson_docker_binary_builder!
   samson_env!

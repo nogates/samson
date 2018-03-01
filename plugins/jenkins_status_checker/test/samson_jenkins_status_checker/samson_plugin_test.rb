@@ -3,5 +3,5 @@ require_relative "../test_helper"
 
 SingleCov.covered!
 
-describe SamsonCanideploy do
+describe JenkinsStatusChecker do
 end

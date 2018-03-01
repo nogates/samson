@@ -1,8 +1,8 @@
-<% if stage.production? && ENV['CANIDEPLOY_ENABLED'] %>
+<% if ENV['JENKINS_STATUS_CHECKER'] && stage.production? %>
   <div class="form-group">
     <div class="alert col-lg-5 col-lg-offset-2">
       <p>Potential Deploy Blockers:</p>
-      <% Canideploy.instance.checklist.each do |item| %>
+      <% JenkinsStatusChecker.instance.checklist.each do |item| %>
         <ul>
           <li><%= item %></li>
         </ul>
