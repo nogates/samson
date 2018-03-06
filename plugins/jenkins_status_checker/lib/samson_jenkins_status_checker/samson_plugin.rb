@@ -4,4 +4,4 @@ module SamsonJenkinsStatusChecker
   end
 end
 
-Samson::Hooks.view :deploy_new, "samson_jenkins_status_checker/deploys_new"
+Samson::Hooks.view :deploy_form, "samson_jenkins_status_checker/deploys_form"

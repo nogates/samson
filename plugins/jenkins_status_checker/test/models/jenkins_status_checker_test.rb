@@ -5,6 +5,7 @@ require_relative '../../test/test_helper'
 SingleCov.covered!
 
 describe JenkinsStatusChecker do
+  with_env(JENKINS_STAGING_VIEW: '/StagingStatus')
   describe ".instance" do
     it "has an available singleton instance" do
       assert_instance_of JenkinsStatusChecker, JenkinsStatusChecker.instance
@@ -13,8 +14,20 @@ describe JenkinsStatusChecker do
 
   describe "#checklist" do
     before do
-      stub_request(:get, "http://www.test-url.com/api/json").
+      stub_request(:get, "http://www.test-url.com/StagingStatus/api/json").
         to_return(body: json_response)
+    end
+
+    describe "when not all the environment variables are set" do
+      let(:json_response) { "" }
+      [{JENKINS_STAGING_VIEW: nil}, {JENKINS_URL: nil}].each do |env_var|
+        with_env(env_var)
+
+        it "returns an error" do
+          message = ["Failed to retrieve jenkins checklist"]
+          assert_equal(message, JenkinsStatusChecker.instance.checklist)
+        end
+      end
     end
 
     describe "when there are errors connecting" do

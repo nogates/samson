@@ -5,11 +5,6 @@ require 'singleton'
 class JenkinsStatusChecker
   include Singleton
 
-  URL = ENV['JENKINS_URL'] # 'https://jenkins.yourcompany.com'
-  USERNAME = ENV['JENKINS_USERNAME']
-  API_KEY = ENV['JENKINS_API_KEY']
-  JENKINS_CHECKLIST = ENV['JENKINS_STAGING_VIEW'] # '/view/StagingStatus'
-
   def checklist
     items = []
     results = check_jenkins
@@ -28,7 +23,10 @@ class JenkinsStatusChecker
   private
 
   def check_jenkins
-    client.api_get_request(JENKINS_CHECKLIST)
+    client.api_get_request(ENV.fetch('JENKINS_STAGING_VIEW'))
+  rescue KeyError => e
+    Rails.logger.warn "Missing ENV variable for jenkins #{e}"
+    return nil
   rescue Timeout::Error => e
     Rails.logger.warn "Timeout while fetching jenkins checklist.  #{e.class} #{e}"
     return nil
@@ -41,9 +39,9 @@ class JenkinsStatusChecker
   def client
     @client ||= \
       JenkinsApi::Client.new(
-        server_url: URL,
-        username: USERNAME,
-        password: API_KEY
+        server_url: ENV.fetch('JENKINS_URL'),
+        username: ENV.fetch('JENKINS_USERNAME'),
+        password: ENV.fetch('JENKINS_API_KEY')
       )
   end
 end

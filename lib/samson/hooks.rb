@@ -13,7 +13,6 @@ module Samson
       :build_button,
       :build_new,
       :build_show,
-      :deploy_new,
       :deploy_group_show,
       :deploy_group_form,
       :deploy_group_table_header,
