@@ -5,7 +5,7 @@ require_relative '../../test/test_helper'
 SingleCov.covered!
 
 describe JenkinsStatusChecker do
-  with_env(JENKINS_STAGING_VIEW: '/StagingStatus')
+  with_env(JENKINS_STATUS_CHECKER: '/StagingStatus')
   describe ".instance" do
     it "has an available singleton instance" do
       assert_instance_of JenkinsStatusChecker, JenkinsStatusChecker.instance
@@ -20,7 +20,7 @@ describe JenkinsStatusChecker do
 
     describe "when not all the environment variables are set" do
       let(:json_response) { "" }
-      [{JENKINS_STAGING_VIEW: nil}, {JENKINS_URL: nil}].each do |env_var|
+      [{JENKINS_STATUS_CHECKER: nil}, {JENKINS_URL: nil}].each do |env_var|
         with_env(env_var)
 
         it "returns an error" do

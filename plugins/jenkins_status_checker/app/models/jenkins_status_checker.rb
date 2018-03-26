@@ -23,7 +23,7 @@ class JenkinsStatusChecker
   private
 
   def check_jenkins
-    client.api_get_request(ENV.fetch('JENKINS_STAGING_VIEW'))
+    client.api_get_request(ENV.fetch('JENKINS_STATUS_CHECKER'))
   rescue KeyError => e
     Rails.logger.warn "Missing ENV variable for jenkins #{e}"
     return nil
