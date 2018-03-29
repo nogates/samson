@@ -14,6 +14,8 @@ class Deploy < ActiveRecord::Base
   validate :validate_stage_is_unlocked, on: :create
   validate :validate_stage_uses_deploy_groups_properly, on: :create
 
+  before_create :store_env_state
+
   delegate(
     :started_by?, :can_be_cancelled_by?, :cancel, :status, :user, :output,
     :active?, :pending?, :running?, :cancelling?, :cancelled?, :succeeded?,
@@ -265,5 +267,19 @@ class Deploy < ActiveRecord::Base
 
   def trim_reference
     self.reference = reference.strip if reference.present?
+  end
+
+  def serialize_env_state
+    if deploy_groups = stage.deploy_groups.presence
+      deploy_groups.each_with_object({}) do |dg, hash|
+        hash[dg.permalink] = EnvironmentVariable.env(project, dg, preview: true)
+      end
+    else
+      EnvironmentVariable.env(project, nil, preview: true)
+    end.to_json
+  end
+
+  def store_env_state
+    self.env_state = serialize_env_state
   end
 end

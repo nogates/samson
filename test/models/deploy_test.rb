@@ -684,6 +684,40 @@ describe Deploy do
     end
   end
 
+  describe "#serialize_env_state" do
+    let(:deploy_group) { deploy_groups(:pod100) }
+
+    before do
+      create_secret("global/global/global/baz")
+      EnvironmentVariable.create!(parent: project, name: "BAR", value: "secret://baz")
+      EnvironmentVariable.create!(parent: project, name: "FOO", value: "bar")
+      EnvironmentVariable.create!(
+        parent: project,
+        name: "SPECIAL",
+        value: "value",
+        scope_id: deploy_group.id,
+        scope_type: 'DeployGroup'
+      )
+    end
+
+    it 'serializes env state to a hash with no deploy groups' do
+      deploy.stage.update_attribute(:deploy_groups, [])
+      expected = { BAR: 'secret://global/global/global/baz', FOO: 'bar' }.to_json
+      deploy.send(:serialize_env_state).must_equal expected
+    end
+
+    it 'serializes env state to a hash with deploy groups' do
+      expected = {
+        pod100: {
+          SPECIAL: 'value',
+          BAR: 'secret://global/global/global/baz',
+          FOO: 'bar'
+        }
+      }.to_json
+      deploy.send(:serialize_env_state).must_equal expected
+    end
+  end
+
   def create_deploy!(attrs = {})
     default_attrs = {
       reference: "baz",
