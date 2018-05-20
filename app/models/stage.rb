@@ -204,6 +204,10 @@ class Stage < ActiveRecord::Base
     Rails.application.routes.url_helpers.project_stage_url(project, self)
   end
 
+  def reference
+    default_reference || "master"
+  end
+
   private
 
   def audited_changes

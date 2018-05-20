@@ -755,4 +755,20 @@ describe Stage do
       stage.url.must_equal "http://www.test-url.com/projects/foo/stages/staging"
     end
   end
+
+  describe "#reference" do
+    context "when the stage has a default reference" do
+      before { stage.update_attribute(:default_reference, "staging") }
+
+      it "returns the default reference" do
+        stage.reference.must_equal "staging"
+      end
+    end
+
+    context "when the stage does not have a default_reference" do
+      it "returns master" do
+        stage.reference.must_equal "master"
+      end
+    end
+  end
 end
