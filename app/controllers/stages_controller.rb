@@ -124,6 +124,7 @@ class StagesController < ApplicationController
       :command,
       :confirm,
       :permalink,
+      :default_reference,
       :dashboard,
       :production,
       :notify_email_address,

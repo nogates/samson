@@ -195,6 +195,7 @@ describe StagesController do
             stage: {
               name: 'test',
               command: 'test command',
+              default_reference: 'staging',
               command_ids: [commands(:echo).id, new_command.id]
             }
           }
@@ -205,6 +206,7 @@ describe StagesController do
         it 'is created' do
           subject.persisted?.must_equal(true)
           subject.command_ids.must_include(commands(:echo).id)
+          subject.default_reference.must_equal("staging")
           subject.script.must_equal(commands(:echo).command + "\ntest2 command\ntest command")
         end
 
