@@ -1,6 +1,8 @@
 <fieldset class="unfoldable">
   <%= form.input :name, required: true %>
   <%= form.input :permalink, required: true if form.object.persisted? %>
+  <%= form.input :default_reference,
+        help: "Default reference for this stage. Could be any valid git ref. `master` will be used by default if none is specified" %>
   <%= form.input :notify_email_address,
         label: "Notify after deploy",
         help: "Email addresses to notify of finished deploys, separated by <code>;</code>".html_safe
