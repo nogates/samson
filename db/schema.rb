@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510172630) do
+ActiveRecord::Schema.define(version: 2018_05_14_015726) do
 
   create_table "audits", force: :cascade do |t|
     t.integer "auditable_id", null: false
@@ -524,6 +524,7 @@ ActiveRecord::Schema.define(version: 20180510172630) do
     t.boolean "builds_in_environment", default: false, null: false
     t.boolean "block_on_gcr_vulnerabilities", default: false, null: false
     t.boolean "notify_assertible", default: false, null: false
+    t.string "default_reference"
     t.index ["project_id", "permalink"], name: "index_stages_on_project_id_and_permalink", unique: true, length: { permalink: 191 }
     t.index ["template_stage_id"], name: "index_stages_on_template_stage_id"
   end
