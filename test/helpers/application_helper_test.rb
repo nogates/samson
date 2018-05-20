@@ -109,6 +109,12 @@ describe ApplicationHelper do
       link.must_include "btn-warning"
     end
 
+    it "uses the reference of the stage when the stage is direct" do
+      stage.stubs(reference: "staging")
+      stage.stubs(direct?: true)
+      assert_includes link, %(href="/projects/#{project.to_param}/stages/#{stage.to_param}/deploys?deploy%5Breference%5D=staging&amp;deploy%5Bstage_id%5D=#{stage.id}")
+    end
+
     describe "when stage can run in parallel" do
       before { stage.stubs(:run_in_parallel).returns true }
 

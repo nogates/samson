@@ -34,7 +34,7 @@ module ApplicationHelper
     elsif Lock.locked_for?(stage, current_user)
       content_tag :a, "Locked", class: "btn btn-primary disabled", disabled: true
     elsif stage.direct?
-      path = project_stage_deploys_path(project, stage, deploy: {reference: "master", stage_id: stage.id})
+      path = project_stage_deploys_path(project, stage, deploy: {reference: stage.reference, stage_id: stage.id})
       link_to "Deploy!", path, role: "button", class: "btn btn-warning", data: {method: :post}
     else
       path = new_project_stage_deploy_path(project, stage)
